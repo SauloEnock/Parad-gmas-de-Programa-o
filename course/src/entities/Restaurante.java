@@ -41,11 +41,6 @@ public class Restaurante {
 		}
 		return i;
 	}
-
-	@Override
-	public String toString() {
-		return "\nRestaurante " + name + " - " + stars + " Estrelas";
-	}
 	
 	public void printCardapio() {
 		cardapio.printCardapio();
@@ -126,4 +121,10 @@ public class Restaurante {
 			obj.printClientes();
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return "\nRestaurante " + name + " - " + stars + " Estrelas";
+	}
+	
 }

@@ -162,9 +162,9 @@ public class Program {
 				case 7:
 					System.out.println("\n[OPCAO 7 - ENCERRAR O DIA]\n");
 					if(rest != null) {
+						System.out.println("[Restaurante - " + rest.getName() + "]");
 						boolean verif = rest.encerraDia();
 						if(verif) {
-							System.out.println("[Restaurante - " + rest.getName() + "]");
 							System.out.println("[Dia encerrado com sucesso!]");
 							out = true;
 						}else {
