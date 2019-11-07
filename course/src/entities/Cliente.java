@@ -28,7 +28,7 @@ public class Cliente {
 		return contaC;
 	}
 	
-	public boolean addPedido(Cardapio card) {
+	public void addPedido(Cardapio card) {
 		if(card.getNmrItems() > 0) {
 			card.printCardapio();
 			System.out.print("Quantos items deseja pedir?: ");
@@ -49,15 +49,11 @@ public class Cliente {
 					}
 				}
 			}
-			return true;
 		}
-		return false;
 	}
 	
 	public void esvaziaPedido() {
-		for(int i = this.getNmrPedidos(); i > 0; i--) {
-			pedidos.remove(i-1);
-		}
+		pedidos.clear();
 	}
 	
 	public void printPedidos() {
@@ -69,14 +65,10 @@ public class Cliente {
 	}
 	
 	public Integer getNmrPedidos() {
-		int i = 0;
-		for(String obj : pedidos) {
-			i++;
-		}
-		return i;
+		return pedidos.size();
 	}
 	
-	public boolean rmvPedido(Cardapio card) {
+	public void rmvPedido(Cardapio card) {
 		double price = 0.0;
 		if(this.getNmrPedidos() > 0) {
 			this.printPedidos();
@@ -86,9 +78,7 @@ public class Cliente {
 			price = card.getPrice(name);
 			this.contaC -= price;
 			pedidos.remove(name);
-			return true;
 		}
-		return false;
 	}
 
 	@Override

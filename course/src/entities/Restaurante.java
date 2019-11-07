@@ -35,11 +35,7 @@ public class Restaurante {
 	}
 	
 	public Integer getNmrTables() {
-		int i = 0;
-		for(Mesa obj : mesas) {
-			i++;
-		}
-		return i;
+		return mesas.size();
 	}
 	
 	public void printCardapio() {
@@ -50,69 +46,41 @@ public class Restaurante {
 		mesas.add(table);
 	}
 	
-	public boolean addClienteMesaN(String name, Integer nmrMesa) {
-		for(Mesa obj : mesas) {
-			if(obj.getTableNumber() == nmrMesa) {
-				obj.addClientes(name);
-				return true;
-			}
-		}
-		return false;
+	public void addClienteMesaN(String name, Integer nmrMesa) {
+		mesas.get(nmrMesa - 1).addClientes(name);
 	}
 	
-	public boolean removerCliente(Integer nmrMesa, String name) {
-		for(Mesa obj : mesas) {
-			if(obj.getTableNumber() == nmrMesa) {
-				return obj.removerCliente(name);
-			}
-		}
-		return false;
+	public void removerCliente(Integer nmrMesa, String name) {
+		mesas.get(nmrMesa - 1).removerCliente(name);
 	}
 	
-	public boolean addPedido(Integer nmrMesa, String name) {
-		for(Mesa obj : mesas) {
-			if(obj.getTableNumber() == nmrMesa) {
-				return obj.addPedido(name, cardapio);
-			}
-		}
-		return false;
+	public void addPedido(Integer nmrMesa, String name) {
+		mesas.get(nmrMesa - 1).addPedido(name, cardapio);
 	}
 	
-	public boolean rmvPedido(Integer nmrMesa, String name) {
-		for(Mesa obj : mesas) {
-			if(obj.getTableNumber() == nmrMesa) {
-				return obj.rmvPedido(name, cardapio);
-			}
-		}
-		return false;
+	public void rmvPedido(Integer nmrMesa, String name) {
+		mesas.get(nmrMesa - 1).rmvPedido(name, cardapio);
 	}
 	
-	public boolean fechaConta(Integer nmrMesa) {
+	public void fechaConta(Integer nmrMesa) {
 		double contaMesa = 0.0;
 		if(this.getNmrTables() > 0) {
-			for(Mesa obj : mesas) {
-				if(obj.getTableNumber() == nmrMesa) {
-					contaMesa = obj.fechaConta();
-					System.out.println("Conta Mesa [" + nmrMesa + "] - R$" + contaMesa);
-					return true;
-				}
-			}
+			contaMesa = mesas.get(nmrMesa - 1).fechaConta();
+			System.out.println("Conta Mesa [" + nmrMesa + "] - R$" + contaMesa);
 		}
-		return false;
 	}
 	
-	public boolean encerraDia() {
-		double contaMesa = 0.0;
+	public void encerraDia() {
+		double contaMesa;
 		if(this.getNmrTables() > 0) {
 			for(Mesa obj : mesas) {
+				contaMesa = 0.0;
 				if(obj.getNmrClientes() > 0) {
 					contaMesa = obj.fechaConta();
 					System.out.println("Conta Mesa [" + obj.getTableNumber() + "] - R$" + contaMesa);
 				}
 			}
-			return true;
 		}
-		return false;
 	}
 	
 	public void printMesas() {

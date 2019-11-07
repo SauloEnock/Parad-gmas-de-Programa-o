@@ -20,8 +20,7 @@ public class Cardapio {
 			String name = sc.nextLine();
 			System.out.print("Preco: ");
 			double price = sc.nextDouble();
-			Item a = new Item(name, price);
-			items.add(a);
+			items.add(new Item(name, price));
 			sc.nextLine();
 		}
 	}
@@ -37,11 +36,7 @@ public class Cardapio {
 	}
 	
 	public Integer getNmrItems() {
-		int i = 0;
-		for(Item obj : items) {
-			i++;
-		}
-		return i;
+		return items.size();
 	}
 	
 	public void printCardapio() {

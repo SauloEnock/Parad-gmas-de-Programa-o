@@ -16,7 +16,6 @@ public class Program {
 		
 		Restaurante rest = null;
 		boolean out = false;
-		int nmrMesas = 1;
 		
 		while(out != true) {
 			System.out.println("");
@@ -68,10 +67,10 @@ public class Program {
 							if(rest.getNmrTables() < rest.getMaxTables()) {
 								System.out.print("Quantos lugares a mesa possui?: ");
 								int lugares = sc.nextInt();
-								Mesa mesa = new Mesa(nmrMesas, lugares);
+								Mesa.nmr++;
+								Mesa mesa = new Mesa(lugares);
 								mesa.addClientes(name);
 								rest.addMesa(mesa);
-								nmrMesas++;
 								System.out.println("\n[Cliente adicionado com sucesso!]");
 							}else {
 								System.out.println("\n[Nao ha mesas vazias!]");
@@ -80,12 +79,8 @@ public class Program {
 							rest.printMesas();
 							System.out.print("A qual mesa o cliente ira se juntar?: ");
 							int nMesa = sc.nextInt();
-							boolean verif = rest.addClienteMesaN(name, nMesa);
-							if(verif) {
-								System.out.println("\n[Cliente adicionado a mesa com sucesso!]");
-							}else {
-								System.out.println("\n[Erro na adicao do cliente!]");
-							}
+							rest.addClienteMesaN(name, nMesa);
+							System.out.println("\n[Cliente adicionado a mesa com sucesso!]");
 						}else {
 							System.out.println("[OPCAO INVALIDA!]");
 						}
@@ -114,12 +109,8 @@ public class Program {
 						System.out.print("Qual cliente ira fazer o pedido?: ");
 						sc.nextLine();
 						String name = sc.nextLine();
-						boolean verif = rest.addPedido(nMesa, name);
-						if(verif) {
-							System.out.println("\n[Pedido realizado com sucesso!]");
-						}else {
-							System.out.println("\n[Falha na realizacao do pedido!]");
-						}
+						rest.addPedido(nMesa, name);
+						System.out.println("\n[Pedido realizado com sucesso!]");
 					}else {
 						System.out.println("\n[Restaurante nao existe!]");
 					}
@@ -133,12 +124,8 @@ public class Program {
 						System.out.print("Qual cliente ira remover o pedido?: ");
 						sc.nextLine();
 						String name = sc.nextLine();
-						boolean verif = rest.rmvPedido(nMesa, name);
-						if(verif) {
-							System.out.println("\n[Pedido cancelado com sucesso!]");
-						}else {
-							System.out.println("\n[Falha no cancelamento do pedido!]");
-						}
+						rest.rmvPedido(nMesa, name);
+						System.out.println("\n[Pedido cancelado com sucesso!]");
 					}else {
 						System.out.println("\n[Restaurante nao existe!]");
 					}
@@ -149,12 +136,8 @@ public class Program {
 						rest.printMesas();
 						System.out.print("Qual mesa ira fechar a conta?: ");
 						int nMesa = sc.nextInt();
-						boolean verif = rest.fechaConta(nMesa);
-						if(verif) {
-							System.out.println("\n[Conta fechada com sucesso!]");
-						}else {
-							System.out.println("\n[Falha no fecho da conta!]");
-						}
+						rest.fechaConta(nMesa);
+						System.out.println("\n[Conta fechada com sucesso!]");
 					}else {
 						System.out.println("\n[Restaurante nao existe!]");
 					}
@@ -162,14 +145,10 @@ public class Program {
 				case 7:
 					System.out.println("\n[OPCAO 7 - ENCERRAR O DIA]\n");
 					if(rest != null) {
-						System.out.println("[Restaurante - " + rest.getName() + "]");
-						boolean verif = rest.encerraDia();
-						if(verif) {
-							System.out.println("[Dia encerrado com sucesso!]");
-							out = true;
-						}else {
-							System.out.println("\n[Falha no encerramento do dia!]");
-						}
+						System.out.println("[Restaurante " + rest.getStars() +  " Estrelas - " + rest.getName() + "]");
+						rest.encerraDia();
+						System.out.println("[Dia encerrado com sucesso!]");
+						out = true;
 					}else {
 						System.out.println("\n[Restaurante nao existe!]");
 					}
