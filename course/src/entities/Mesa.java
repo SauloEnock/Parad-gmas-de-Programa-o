@@ -54,12 +54,14 @@ public class Mesa { //BlackMesa
 	}
 	
 	public void removerCliente(String name) {
+		Cliente aux = null;
 		for(Cliente obj : clientes) {
 			if(name.equals(obj.getName())) {
 				System.out.println("Conta do cliente: R$" + obj.getContaC());
-				clientes.remove(obj);
+				aux = obj;
 			}
 		}
+		if(aux != null){ clientes.remove(aux); }
 	}
 	
 	public Double fechaConta() {
