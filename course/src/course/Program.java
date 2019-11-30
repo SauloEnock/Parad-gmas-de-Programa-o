@@ -3,161 +3,133 @@ package course;
 import java.util.Locale; //Locale.setDefault(Locale.US);
 import java.util.Scanner; //Scanner sc = new Scanner(System.in);
 //import entities.enums.Classe; // importação de enums
-import entities.Restaurante; // importaçao de classes
-import entities.Cardapio;
-import entities.Mesa;
+import entities.Cinema; // importaçao de classes
+import entities.Sala;
+import entities.Time;
+import entities.Filme;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class Program {
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws ParseException {
 		
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 		
-		Restaurante rest = null;
 		boolean out = false;
+		Cinema cine = new Cinema();
+		
+		System.out.print("Qual o numero de salas do cinema?: ");
+		int salas = sc.nextInt();
+		
+		for(int i = 0; i < salas; i++) {
+			System.out.println("Sala #" + (i+1));
+			Sala.n++;
+			cine.addSala();
+		}
+		
+		cine.printSalas();
 		
 		while(out != true) {
 			System.out.println("");
-			System.out.println("[1] Registrar Restaurante");  
-			System.out.println("[2] Inserir Cliente"); //um cliente pode sentar em uma mesa vazia, ou se juntar a uma já ocupada
-			System.out.println("[3] Remover Cliente"); //o cliente sai da mesa e tem sua conta individual fechada automaticamente
-			System.out.println("[4] Fazer pedido"); //printa o cardápio durante o pedido e adiciona um pedido
-			System.out.println("[5] Cancelar pedido"); //remove um pedido de um cliente especifico
-			System.out.println("[6] Fechar a conta"); //fecha a conta de uma mesa específica
-			System.out.println("[7] Encerrar o dia"); //fecha a conta de todas as mesas ainda existentes
+			System.out.println("[1] Adicionar Sessao");  
+			System.out.println("[2] Remover Sessao"); //um cliente pode sentar em uma mesa vazia, ou se juntar a uma já ocupada
+			System.out.println("[3] Alterar Sessao"); //printa o cardápio durante o pedido e adiciona um pedido
+			System.out.println("[4] Comprar Ingresso"); //printa o cardápio durante o pedido e adiciona um pedido
+			System.out.println("[0] Sair"); //encerra o programa
 			System.out.print("Opcao escolhida: ");
 			int opcao = sc.nextInt();
 			
 			switch(opcao) {
 				case 1:
-					System.out.println("\n[OPCAO 1 - RESGISTRAR RESTAURANTE]\n");
-					if(rest == null) {
-						System.out.print("Nome: ");
-						sc.nextLine();
-						String name = sc.nextLine();
-						System.out.print("Estrelas(1-5): ");
-						int stars = sc.nextInt();
-						System.out.print("Quantas mesas o restaurante possui?: ");
-						int mesas = sc.nextInt();
-						Cardapio crdp = new Cardapio();
-						System.out.print("Quantos items existem no cardapio?: ");
-						int nmrCard = sc.nextInt();
-						crdp.addItems(nmrCard);
-						rest = new Restaurante(name, stars, mesas, crdp);
-						if(rest != null) {
-							System.out.println("\n[Restaurante registrado com sucesso!]");
-						}
-					}else {
-						System.out.println("\n[Restaurante ja registrado!]");
+					System.out.println("\n[OPCAO 1 - ADICIONAR SESSAO]\n");
+					System.out.print("Digite o nome do filme: ");
+					sc.nextLine();
+					String nome = sc.nextLine();
+					System.out.print("Digite a duração do filme(no formato hh:mm:ss): ");
+					sc.nextLine();
+					String duracao = sc.nextLine();
+					Filme aux = new Filme(nome, new Time(duracao));
+					System.out.print("Em quantas salas o filme será exibido?: ");
+					int salasE = sc.nextInt(); int p = 0;
+					while(p < salasE) {
+						cine.printSalas();
+						System.out.print("Qual sala voce deseja adicionar a sessao?: ");
+						int choice = sc.nextInt();
+						cine.addSessao(choice, aux);
+						p++;
 					}
 					break;
 				case 2:
-					System.out.println("\n[OPCAO 2 - ADICIONAR CLIENTE]\n");
-					if(rest != null) {
-						System.out.print("Nome do cliente: ");
+					System.out.print("\n[OPCAO 2 - REMOVER SESSAO]\n");
+					cine.printSalas();
+					System.out.print("Deseja remover sessoes de qual sala?: ");
+					int salaR = sc.nextInt();
+					cine.printSessoes(salaR);
+					System.out.print("Deseja remover quantas sessoes?: ");
+					int nRmv = sc.nextInt(); int k = 0;
+					while(k < nRmv) {
+						System.out.print("Qual o filme o qual deseja que seja retirado das sessoes?: ");
 						sc.nextLine();
-						String name = sc.nextLine();
-						System.out.println("O cliente ira.:");
-						System.out.println("[1] Sentar-se em uma mesa vazia");
-						System.out.println("[2] Juntar-se a uma mesa ocupada");
-						System.out.print("Opcao escolhida.: ");
-						int choice = sc.nextInt();
-						if(choice == 1) {
-							if(rest.getNmrTables() < rest.getMaxTables()) {
-								System.out.print("Quantos lugares a mesa possui?: ");
-								int lugares = sc.nextInt();
-								Mesa.nmr++;
-								Mesa mesa = new Mesa(lugares);
-								mesa.addClientes(name);
-								rest.addMesa(mesa);
-								System.out.println("\n[Cliente adicionado com sucesso!]");
-							}else {
-								System.out.println("\n[Nao ha mesas vazias!]");
-							}
-						}else if(choice == 2){
-							rest.printMesas();
-							System.out.print("A qual mesa o cliente ira se juntar?: ");
-							int nMesa = sc.nextInt();
-							rest.addClienteMesaN(name, nMesa);
-							System.out.println("\n[Cliente adicionado a mesa com sucesso!]");
-						}else {
-							System.out.println("[OPCAO INVALIDA!]");
-						}
-					}else {
-						System.out.println("\n[Restaurante nao existe!]");
+						String nomeRmv = sc.nextLine();
+						cine.rmvSessao(salaR, nomeRmv);
+						k++;
 					}
 					break;
 				case 3:
-					System.out.println("\n[OPCAO 3 - REMOVER CLIENTE]\n");
-					if(rest != null) {
-						rest.printMesas();
-						System.out.print("Remover de qual mesa?: ");
-						int nMesa = sc.nextInt();
-						System.out.print("Quem ira sair?: ");
+					System.out.println("\n[OPCAO 3 - ALTERAR SESSAO]\n");
+					cine.printSalas();
+					System.out.print("Deseja alterar sessoes de qual sala?: ");
+					int salaA = sc.nextInt();
+					cine.printAllSessoes(salaA);
+					System.out.print("Deseja alterar quantas sessoes?: ");
+					int nAlt = sc.nextInt(); int y = 0;
+					while(y < nAlt) {
+						System.out.print("Qual o filme o qual deseja que seja alterado?: ");
 						sc.nextLine();
-						String name = sc.nextLine();
-						rest.removerCliente(nMesa, name);
+						String nomeAlt = sc.nextLine();
+						System.out.print("Digite o nome do filme substituto: ");
+						sc.nextLine();
+						String nomeA = sc.nextLine();
+						System.out.print("Digite a duração do filme(no formato hh:mm:ss): ");
+						sc.nextLine();
+						String duracaoA = sc.nextLine();
+						cine.alteraSessao(salaA, nomeAlt, new Filme(nomeA, new Time(duracaoA)));
+						y++;
 					}
 					break;
 				case 4:
-					System.out.println("\n[OPCAO 4 - FAZER PEDIDO]\n");
-					if(rest != null) {
-						rest.printMesas();
-						System.out.print("\nO pedido sera feito em qual mesa?: ");
-						int nMesa = sc.nextInt();
-						System.out.print("Qual cliente ira fazer o pedido?: ");
+					System.out.println("\n[OPCAO 4 - COMPRAR INGRESSO]\n");
+					char letra; String nome2;
+					do{
+						cine.printSalas();
+						System.out.print("Deseja ver as sessoes de qual sala?: ");
+						int salaS = sc.nextInt();
+						cine.printSessoes(salaS);
+						System.out.print("Desejar assistir qual filme?: ");
 						sc.nextLine();
-						String name = sc.nextLine();
-						rest.addPedido(nMesa, name);
-						System.out.println("\n[Pedido realizado com sucesso!]");
-					}else {
-						System.out.println("\n[Restaurante nao existe!]");
-					}
+						nome2 = sc.nextLine();
+						System.out.print("Quantos ingressos?: ");
+						int nmrIng = sc.nextInt();
+						cine.comprarIngresso(salaS, nome2, nmrIng);
+						System.out.print("Continuar comprando(S/N)?: ");
+						letra = sc.next().charAt(0);
+					}while(letra != 'N' && letra != 'n');
 					break;
-				case 5:
-					System.out.println("\n[OPCAO 5 - CANCELAR PEDIDO]\n");
-					if(rest != null) {
-						rest.printMesas();
-						System.out.print("O pedido sera removido em qual mesa?: ");
-						int nMesa = sc.nextInt();
-						System.out.print("Qual cliente ira remover o pedido?: ");
-						sc.nextLine();
-						String name = sc.nextLine();
-						rest.rmvPedido(nMesa, name);
-						System.out.println("\n[Pedido cancelado com sucesso!]");
-					}else {
-						System.out.println("\n[Restaurante nao existe!]");
-					}
-					break;
-				case 6:
-					System.out.println("\n[OPCAO 6 - FECHAR A CONTA]\n");
-					if(rest != null) {
-						rest.printMesas();
-						System.out.print("Qual mesa ira fechar a conta?: ");
-						int nMesa = sc.nextInt();
-						rest.fechaConta(nMesa);
-						System.out.println("\n[Conta fechada com sucesso!]");
-					}else {
-						System.out.println("\n[Restaurante nao existe!]");
-					}
-					break;
-				case 7:
-					System.out.println("\n[OPCAO 7 - ENCERRAR O DIA]\n");
-					if(rest != null) {
-						System.out.println("[Restaurante " + rest.getStars() +  " Estrelas - " + rest.getName() + "]");
-						rest.encerraDia();
-						System.out.println("[Dia encerrado com sucesso!]");
-						out = true;
-					}else {
-						System.out.println("\n[Restaurante nao existe!]");
-					}
+				case 0:
+					System.out.println("\n[SAIR]\n");
+					out = true;
 					break;
 				default:
 					System.out.println("\n[OPCAO INVALIDA!]\n");
 					break;
 			}
 		}
+		
 		sc.close();
 	}
 	
