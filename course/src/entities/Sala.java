@@ -102,11 +102,13 @@ public class Sala {
 	
 	public void printSessoes() {
 		String aux = "removido";
+		System.out.println("Sessoes.: ");
 		for(Sessao obj : sessoes) {
 			if(aux.equals(obj.getFilme().getNome()) == false) {
 				System.out.println(obj);
 			}
 		}
+		System.out.println();
 	}
 	
 	public void printAllSessoes() {

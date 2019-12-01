@@ -73,6 +73,7 @@ public class Sessao {
 		System.out.println(sdf1.format(date));
 		System.out.println("[" + filme.getNome() + "]");
 		System.out.println("Duracao: " + filme.getDuracao());
+		System.out.println("Horario: " + this.getInicio() + " - " + this.getFim());
 		System.out.println("Inteiras: " + (nmrIng - nmrMeia));
 		System.out.println("Meias: " + nmrMeia);
 		this.nmrIng -= nmrIng;

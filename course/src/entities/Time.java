@@ -67,7 +67,25 @@ public class Time {
 
 	@Override
 	public String toString() {
-		return horas + ":" + minutos + ":" + segundos;
+		String aux = "";
+		if(this.horas < 10) { 
+			aux += "0" + this.horas;
+		}else {
+			aux += this.horas;
+		}
+		aux += ":";
+		if(this.minutos < 10) { 
+			aux += "0" + this.minutos;
+		}else {
+			aux += this.minutos;
+		}
+		aux += ":";
+		if(this.segundos < 10) { 
+			aux += "0" + this.segundos;
+		}else {
+			aux += this.segundos;
+		}
+		return aux;
 	}
 	
 	

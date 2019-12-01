@@ -36,7 +36,7 @@ public class Cinema {
 	}
 	
 	public void printAllSessoes(int nmrSala) {
-		salas.get(nmrSala-1).printSessoes();
+		salas.get(nmrSala-1).printAllSessoes();
 	}
 	
 	public void comprarIngresso(int nmrSala, String nome, int nmrIng) {
@@ -48,5 +48,6 @@ public class Cinema {
 		for(Sala obj : salas) {
 			System.out.println(obj);
 		}
+		System.out.println();
 	}
 }
