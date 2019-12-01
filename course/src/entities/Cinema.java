@@ -43,6 +43,14 @@ public class Cinema {
 		salas.get(nmrSala-1).comprarIngresso(nome, nmrIng);
 	}
 	
+	public void iniciaSessao(int nmrSala) {
+		salas.get(nmrSala-1).setFlag(true);
+	}
+	
+	public void encerraSessao(int nmrSala) {
+		salas.get(nmrSala-1).encerraSessao();
+	}
+	
 	public void printSalas() {
 		System.out.println("\nSalas.:");
 		for(Sala obj : salas) {

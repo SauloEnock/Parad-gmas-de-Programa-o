@@ -42,8 +42,12 @@ public class Sala {
 	public int getFirst() {
 		int i = 0; String aux = "removido";
 		for(Sessao obj : sessoes) {
-			if(aux.equals(obj.getFilme().getNome()) == false) {
+			if(obj.getFilme().getNome().length() < 7) {
 				return i;
+			}else {
+				if(aux.equals(obj.getFilme().getNome().substring(0, 8)) == false) {
+					return i;
+				}
 			}
 			i++;
 		}
@@ -53,10 +57,13 @@ public class Sala {
 	public void addSessao(Filme filme) {
 		boolean verif = false; String aux = "removido";
 		for(Sessao obj : sessoes) {
-			if(aux.equals(obj.getFilme().getNome()) == true) {
-				if(obj.getFilme().getDuracao().menorIgual(filme.getDuracao())) {
-					obj.setFilme(filme);
-					verif = true;
+			if(obj.getFilme().getNome().length() >= 8) {
+				if(aux.equals(obj.getFilme().getNome().substring(0, 8)) == true) {
+					if(obj.getFilme().getDuracao().menorIgual(filme.getDuracao())) {
+						obj.getFilme().setNome(filme.getNome());
+						obj.getFilme().setDuracao(filme.getDuracao());
+						verif = true;
+					}
 				}
 			}
 		}
@@ -79,7 +86,8 @@ public class Sala {
 		for(Sessao obj : sessoes) {
 			if(nomeF.equals(obj.getFilme().getNome())) {
 				if(obj.getFilme().getDuracao().menorIgual(filme.getDuracao())) {
-					obj.setFilme(filme);
+					obj.getFilme().setNome(filme.getNome());
+					obj.getFilme().setDuracao(filme.getDuracao());
 				}else {
 					System.out.println("A duração do filme é maior que o limite!");
 				}
@@ -92,7 +100,7 @@ public class Sala {
 		for(Sessao obj : sessoes) {
 			if(nome.equals(obj.getFilme().getNome())) {
 				if(obj.getNmrIng() > 0) {
-					obj.comprarIngresso(nmrIng);
+					obj.comprarIngresso(nmrIng, this.nmr);
 				}else {
 					System.out.println("A sessao nao tem mais ingressos disponiveis!");
 				}
@@ -100,11 +108,20 @@ public class Sala {
 		}
 	}
 	
+	public void encerraSessao() {
+		this.setFlag(false);
+		sessoes.remove(0);
+	}
+	
 	public void printSessoes() {
 		String aux = "removido";
-		System.out.println("Sessoes.: ");
+		System.out.println("\nSessoes.: ");
 		for(Sessao obj : sessoes) {
-			if(aux.equals(obj.getFilme().getNome()) == false) {
+			if(obj.getFilme().getNome().length() >= 8) {
+				if(aux.equals(obj.getFilme().getNome().substring(0, 8)) == false) {
+					System.out.println(obj);
+				}
+			}else {
 				System.out.println(obj);
 			}
 		}
@@ -112,6 +129,7 @@ public class Sala {
 	}
 	
 	public void printAllSessoes() {
+		System.out.println("\nSessoes.: ");
 		for(Sessao obj : sessoes) {
 			System.out.println(obj);
 		}
@@ -122,6 +140,7 @@ public class Sala {
 		String aux = "\nSala " + nmr + " - " + lugares +" lugares - " + (sessoes.size()) + " Sess(ao/oes)";
 		if(sessoes.size() > 0 && this.getFirst() > -1) {
 			Filme auxF = sessoes.get(this.getFirst()).getFilme();
+			if(this.flag == true) { aux += "\n[Sessao Em Andamento]"; }
 			aux += "\nSessao Atual: " + auxF.getNome() + " - Duracao: " + auxF.getDuracao().toString();
 			aux += "\nInicio: " + sessoes.get(this.getFirst()).getInicio() + " - Fim: " + sessoes.get(this.getFirst()).getFim();
 		}

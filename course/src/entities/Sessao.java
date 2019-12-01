@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 
 public class Sessao {
 	private int nmrIng;
+	private int nRmv = 0;
 	private Date date;
 	private Time inicio;
 	private Time fim;
@@ -51,27 +52,28 @@ public class Sessao {
 	}
 	
 	public void rmvFilme() {
-		this.filme.setNome("removido");
+		this.filme.setNome("removido" + nRmv);
+		this.nRmv++;
 	}
 
 	public void setNmrIng(int nmrIng) {
 		this.nmrIng = nmrIng;
 	}
 	
-	public void comprarIngresso(int nmrIng) {
+	public void comprarIngresso(int nmrIng, int salaN) {
 		if(nmrIng <= this.nmrIng) {
 			System.out.print("Quantos ingressos são meias?: ");
 			int meias = sc.nextInt();
-			this.printIngresso(nmrIng, meias);
+			this.printIngresso(nmrIng, meias, salaN);
 		}else {
 			System.out.println("Esta sessao nao tem ingressos disponiveis suficientes para a compra!");
 		}
 	}
 	
-	public void printIngresso(int nmrIng, int nmrMeia) {
+	public void printIngresso(int nmrIng, int nmrMeia, int salaN) {
 		System.out.println("\n[Ingresso]");
 		System.out.println(sdf1.format(date));
-		System.out.println("[" + filme.getNome() + "]");
+		System.out.println("[" + filme.getNome() + "] - Sala " + salaN);
 		System.out.println("Duracao: " + filme.getDuracao());
 		System.out.println("Horario: " + this.getInicio() + " - " + this.getFim());
 		System.out.println("Inteiras: " + (nmrIng - nmrMeia));
@@ -81,7 +83,7 @@ public class Sessao {
 	
 	@Override
 	public String toString() {
-		String aux = filme.getNome() + " - " + nmrIng + " Ingressos\n";
+		String aux = filme.getNome() + " - " + nmrIng + " Ingressos Disponiveis\n";
 		aux += "Inicio: " + inicio + " - Fim: " + fim + "\n";
 		return aux;
 	}
