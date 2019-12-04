@@ -110,7 +110,7 @@ public class Sala {
 	
 	public void encerraSessao() {
 		this.setFlag(false);
-		sessoes.remove(0);
+		sessoes.remove(this.getFirst());
 	}
 	
 	public void printSessoes() {
@@ -135,9 +135,23 @@ public class Sala {
 		}
 	}
 	
+	public int nmrSessoes() {
+		int i = 0; String aux = "removido";
+		for(Sessao obj : sessoes) {
+			if(obj.getFilme().getNome().length() >= 8) {
+				if(aux.equals(obj.getFilme().getNome().substring(0, 8)) == false) {
+					i++;
+				}
+			}else {
+				i++;
+			}
+		}
+		return i;
+	}
+	
 	@Override
 	public String toString() {
-		String aux = "\nSala " + nmr + " - " + lugares +" lugares - " + (sessoes.size()) + " Sess(ao/oes)";
+		String aux = "\nSala " + nmr + " - " + lugares +" lugares - " + this.nmrSessoes() + " Sess(ao/oes)";
 		if(sessoes.size() > 0 && this.getFirst() > -1) {
 			Filme auxF = sessoes.get(this.getFirst()).getFilme();
 			if(this.flag == true) { aux += "\n[Sessao Em Andamento]"; }
