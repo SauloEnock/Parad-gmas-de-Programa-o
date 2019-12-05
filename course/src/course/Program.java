@@ -23,16 +23,12 @@ public class Program {
 		boolean out = false;
 		Cinema cine = new Cinema();
 		
-		System.out.print("Qual o numero de salas do cinema?: ");
-		int salas = sc.nextInt();
-		
-		for(int i = 0; i < salas; i++) {
-			System.out.println("Sala #" + (i+1));
+		for(int i = 0; i < Cinema.nmrSalas ; i++) {
 			Sala.n++;
 			cine.addSala();
 		}
 		
-		cine.printSalas();
+		//cine.printSalas();
 		
 		while(out != true) {
 			System.out.println("");

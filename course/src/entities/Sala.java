@@ -8,16 +8,15 @@ import java.util.ArrayList;
 public class Sala {
 	public static int n = 0;
 	private int nmr;
-	private int lugares;
+	private static int lugares = 30;
 	private boolean flag;
 	private Time lastSession;
 	private List<Sessao> sessoes;
 	
 	Scanner sc = new Scanner(System.in);
 	
-	public Sala(int lugares) {
+	public Sala() {
 		this.nmr = n;
-		this.lugares = lugares;
 		this.flag = false;
 		lastSession = new Time("13:20:00");
 		this.sessoes = new ArrayList<>();

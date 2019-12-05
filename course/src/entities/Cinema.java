@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Cinema {
+	public static int nmrSalas = 5; 
 	private List<Sala> salas;
 	
 	Scanner sc = new Scanner(System.in);
@@ -14,9 +15,7 @@ public class Cinema {
 	}
 	
 	public void addSala() {
-		System.out.print("Qual o numero de lugares desta sala?: ");
-		int lug = sc.nextInt();
-		salas.add(new Sala(lug));
+		salas.add(new Sala());
 	}
 	
 	public void addSessao(int nmrSala, Filme aux) {
